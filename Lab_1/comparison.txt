@@ -1,0 +1,33 @@
+
+
+SET - Average filling time - 1000 numbers: 0.00192465
+SET - Average filling time - 10000 numbers: 0.0646641
+SET - Average filling time - 100000 numbers: 0.130016
+
+VECTOR - Average filling time - 1000 numbers: 0.000462557
+VECTOR - Average filling time - 10000 numbers: 0.00417546
+VECTOR - Average filling time - 100000 numbers: 0.0415367
+
+SET - Average finding time - 1000numbers: 5.17044e-07
+SET - Average finding time - 10000numbers: 6.11384e-07
+SET - Average finding time - 100000numbers: 1.3127e-06
+
+VECTOR - Average finding time - 1000 numbers: 1.65762e-05
+VECTOR - Average finding time - 10000 numbers: 0.000124587
+VECTOR - Average finding time - 100000 numbers: 0.00117009
+
+SET - Average erasing time - 1000 numbers: 6.86854e-07
+SET - Average erasing time - 10000 numbers: 7.63435e-07
+SET - Average erasing time - 100000 numbers: 1.06876e-06
+
+VECTOR - Average erasing time - 1000 numbers: 7.38503e-06
+VECTOR - Average erasing time - 10000 numbers: 6.84083e-05
+VECTOR - Average erasing time - 100000 numbers: 0.000763045
+
+SET - Average insertion time - 1000 numbers: 9.71902e-07
+SET - Average insertion time - 10000 numbers: 2.16596e-06
+SET - Average insertion time - 100000 numbers: 1.64812e-06
+
+VECTOR - Average insertion time - 1000 numbers: 1.17189e-06
+VECTOR - Average insertion time - 10000 numbers: 7.47928e-07
+VECTOR - Average insertion time - 100000 numbers: 6.50377e-07

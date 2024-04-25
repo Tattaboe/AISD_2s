@@ -14,4 +14,4 @@ if(MSVC)
     endif()
 endif()
 
-add_executable(main "main.cpp"  "tree.h" "task.h" "time.h")
+add_executable(main "src/main.cpp"  "include/tree.h" "include/task.h" "include/time.h")
