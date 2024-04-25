@@ -1,21 +1,28 @@
-﻿# CMakeList.txt : CMake project for Lab_1, include source and define
-# project specific logic here.
-#
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required(VERSION 3.11)
 
-# Enable Hot Reload for MSVC compilers if supported.
-if (POLICY CMP0141)
-  cmake_policy(SET CMP0141 NEW)
-  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
+project(intset CXX)
+
+if(MSVC)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS true)
+    if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+        string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+    endif()
 endif()
 
-project ("Lab_1")
+include(FetchContent)
+FetchContent_Declare(googletest URL https://github.com/google/googletest/archive/6b63c98ac43efc992122f1da12aaf0a0e0658206.zip)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
 
-# Add source to this project's executable.
-add_executable (Lab_1 "Lab_1.cpp" "Lab_1.h")
+add_library(intset
+   "tree.h")
+set_target_properties(intset PROPERTIES LINKER_LANGUAGE CXX)
+target_compile_features(intset PUBLIC cxx_std_23)
 
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET Lab_1 PROPERTY CXX_STANDARD 20)
-endif()
 
-# TODO: Add tests and install targets if needed.
+add_executable(intset_test
+    "Lab_1.cpp")
+target_link_libraries(intset_test gtest gtest_main intset)
+target_include_directories(intset_test PRIVATE "${CMAKE_SOURCE_DIR}")
