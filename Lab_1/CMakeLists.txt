@@ -17,12 +17,12 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 add_library(intset
-   "tree.h")
+   "tree.h" "task.h")
 set_target_properties(intset PROPERTIES LINKER_LANGUAGE CXX)
 target_compile_features(intset PUBLIC cxx_std_23)
 
 
 add_executable(intset_test
-    "time.cpp")
+    "time.cpp" "task.h")
 target_link_libraries(intset_test gtest gtest_main intset)
 target_include_directories(intset_test PRIVATE "${CMAKE_SOURCE_DIR}")
