@@ -1,25 +1,20 @@
-#include "tree.h"
 #include <vector>
+#include <unordered_map>
 
-std::vector<int> task_vector(std::vector<int> v) {
-    Set set;
-    Set duplicates;
-    std::vector<int> result;
+std::vector<int> findDuplicates(const std::vector<int>& v) {
+    std::unordered_map<int, int> countMap;
+    std::vector<int> duplicates;
 
     for (int num : v) {
-        if (set.contains(num)) {
-            duplicates.insert(num);
-        }
-        else {
-            set.insert(num);
+        countMap[num]++;
+    }
+
+   
+    for (const auto& pair : countMap) {
+        if (pair.second > 1) {
+            duplicates.push_back(pair.first);
         }
     }
 
-    for (int num : v) {
-        if (duplicates.contains(num)) {
-            result.push_back(num);
-        }
-    }
-
-    return result;
+    return duplicates;
 }
