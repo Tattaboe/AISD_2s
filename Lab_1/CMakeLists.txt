@@ -23,6 +23,6 @@ target_compile_features(intset PUBLIC cxx_std_23)
 
 
 add_executable(intset_test
-    "Lab_1.cpp")
+    "time.cpp")
 target_link_libraries(intset_test gtest gtest_main intset)
 target_include_directories(intset_test PRIVATE "${CMAKE_SOURCE_DIR}")
