@@ -144,32 +144,53 @@ void average_erasing_vector(size_t size) {
 	cout << "VECTOR - Average erasing time - " << size << " numbers: " << result << endl;
 }
 
-int main() {
-
-	average_filling_set(1000);
-	average_filling_set(10000);
-	average_filling_set(100000);
-
-	average_filling_vector(1000);
-	average_filling_vector(10000);
-	average_filling_vector(100000);
-
-	average_finding_set(1000);
-	average_finding_set(10000);
-	average_finding_set(100000);
-
-	average_finding_vector(1000);
-	average_finding_vector(10000);
-	average_finding_vector(100000);
-
-	average_erasing_set(1000);
-	average_erasing_set(10000);
-	average_erasing_set(100000);
-
-	average_erasing_vector(1000);
-	average_erasing_vector(10000);
-	average_erasing_vector(100000);
-
-
-	
+void average_insertion_set(size_t size) {
+	double result = 0.0;
+	std::mt19937 gen(42);
+	std::uniform_int_distribution<> distrib(-2000000, 2000000);
+	Set data;
+	for (size_t i = 0; i < size; i++)
+	{
+		data.insert(distrib(gen));
+	}
+	for (size_t i = 0; i < 1000; i++)
+	{
+		bool inserted = false;
+		int ins = distrib(gen);
+		auto start = std::chrono::high_resolution_clock::now();
+		if (data.insert(ins)) {
+			inserted = true;
+		}
+		auto end = std::chrono::high_resolution_clock::now();
+		if (inserted) {
+			data.erase(ins);
+		}
+		double seconds = std::chrono::duration<double>(end - start).count();
+		result += seconds / 1000;
+	}
+	cout << "SET - Average insertion time - " << size << " numbers: " << result << endl;
 }
+
+void average_insertion_vector(size_t size) {
+	double result = 0.0;
+	std::mt19937 gen(42);
+	std::uniform_int_distribution<> distrib(-2000000, 2000000);
+	vector<int> data;
+	for (size_t i = 0; i < size; i++)
+	{
+		data.push_back(distrib(gen));
+	}
+	for (size_t i = 0; i < 1000; i++)
+	{
+		int ins = distrib(gen);
+		auto start = std::chrono::high_resolution_clock::now();
+		data.push_back(ins);
+		auto end = std::chrono::high_resolution_clock::now();
+		data.erase(data.begin());
+		double seconds = std::chrono::duration<double>(end - start).count();
+		result += seconds / 1000;
+	}
+	cout << "VECTOR - Average insertion time - " << size << " numbers: " << result << endl;
+}
+
+
