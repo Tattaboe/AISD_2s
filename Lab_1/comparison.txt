@@ -1,33 +1,31 @@
+SET - Average filling time - 1000 numbers: 0.000951916
+SET - Average filling time - 10000 numbers: 0.0188275
+SET - Average filling time - 100000 numbers: 0.146723
 
+VECTOR - Average filling time - 1000 numbers: 0.000429199
+VECTOR - Average filling time - 10000 numbers: 0.00394113
+VECTOR - Average filling time - 100000 numbers: 0.0392366
 
-SET - Average filling time - 1000 numbers: 0.00192465
-SET - Average filling time - 10000 numbers: 0.0646641
-SET - Average filling time - 100000 numbers: 0.130016
+SET - Average finding time - 1000numbers: 5.10335e-07
+SET - Average finding time - 10000numbers: 5.94415e-07
+SET - Average finding time - 100000numbers: 7.61e-07
 
-VECTOR - Average filling time - 1000 numbers: 0.000462557
-VECTOR - Average filling time - 10000 numbers: 0.00417546
-VECTOR - Average filling time - 100000 numbers: 0.0415367
+VECTOR - Average finding time - 1000 numbers: 1.76157e-05
+VECTOR - Average finding time - 10000 numbers: 0.00011568
+VECTOR - Average finding time - 100000 numbers: 0.00112108
 
-SET - Average finding time - 1000numbers: 5.17044e-07
-SET - Average finding time - 10000numbers: 6.11384e-07
-SET - Average finding time - 100000numbers: 1.3127e-06
+SET - Average erasing time - 1000 numbers: 6.1403e-07
+SET - Average erasing time - 10000 numbers: 7.17818e-07
+SET - Average erasing time - 100000 numbers: 8.68028e-07
 
-VECTOR - Average finding time - 1000 numbers: 1.65762e-05
-VECTOR - Average finding time - 10000 numbers: 0.000124587
-VECTOR - Average finding time - 100000 numbers: 0.00117009
+VECTOR - Average erasing time - 1000 numbers: 6.67075e-06
+VECTOR - Average erasing time - 10000 numbers: 6.48984e-05
+VECTOR - Average erasing time - 100000 numbers: 0.000730059
 
-SET - Average erasing time - 1000 numbers: 6.86854e-07
-SET - Average erasing time - 10000 numbers: 7.63435e-07
-SET - Average erasing time - 100000 numbers: 1.06876e-06
+SET - Average insertion time - 1000 numbers: 8.19566e-07
+SET - Average insertion time - 10000 numbers: 9.72058e-07
+SET - Average insertion time - 100000 numbers: 1.34853e-06
 
-VECTOR - Average erasing time - 1000 numbers: 7.38503e-06
-VECTOR - Average erasing time - 10000 numbers: 6.84083e-05
-VECTOR - Average erasing time - 100000 numbers: 0.000763045
-
-SET - Average insertion time - 1000 numbers: 9.71902e-07
-SET - Average insertion time - 10000 numbers: 2.16596e-06
-SET - Average insertion time - 100000 numbers: 1.64812e-06
-
-VECTOR - Average insertion time - 1000 numbers: 1.17189e-06
-VECTOR - Average insertion time - 10000 numbers: 7.47928e-07
-VECTOR - Average insertion time - 100000 numbers: 6.50377e-07
+VECTOR - Average insertion time - 1000 numbers: 5.71864e-07
+VECTOR - Average insertion time - 10000 numbers: 6.65567e-07
+VECTOR - Average insertion time - 100000 numbers: 6.13491e-07

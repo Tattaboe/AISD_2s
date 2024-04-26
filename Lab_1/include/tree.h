@@ -103,6 +103,7 @@
 			std::swap(_root, rhs.get_root());
 		}
 
+
 		Tree* erase_node(Tree* node, int key, bool& deleted) {
 			if (node == nullptr) return node;
 			if (key < node->_data) node->_left = erase_node(node->_left, key, deleted);
