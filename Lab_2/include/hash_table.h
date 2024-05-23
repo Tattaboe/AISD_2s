@@ -129,6 +129,33 @@ public:
 		return nullptr;
 	}
 
+	bool erase(const K& key) {
+		Pair* find_pair = search(key);
+		if (!find_pair)
+			return false;
+		find_pair->not_empty = true;
+		return true;
+	}
+
+	size_t count(K key) {
+		size_t index = hash_func(key) % _data.size();
+		size_t cnt = 0;
+
+		if (_data[index].not_empty) {
+			return 0; 
+		}
+
+		size_t start_index = index;
+		do {
+			if (!_data[index].not_empty && _data[index].key == key) {
+				cnt++;
+			}
+			index = (index + 1) % _data.size();
+		} while (index != start_index);
+
+		return cnt;
+	}
+
 
 };
 
