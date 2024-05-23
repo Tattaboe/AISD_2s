@@ -1,4 +1,5 @@
 ﻿#include "../include/hash_table.h"
+#include <random>
 
 int main() {
 	std::cout << "Insert check" << std::endl;
@@ -29,5 +30,42 @@ int main() {
 	std::cout << std::endl;
 	std::cout << std::endl;
 	hasht.print();
+
+	
+	std::cout << std::endl;
+	std::cout << "Search 5: ";
+	auto search_result = hasht.search(5);
+	std::cout << search_result->value << " ";
+	std::cout << std::endl;
+	
+	std::cout << std::endl;
+	std::cout << std::endl;
+
+    std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dis(0, 50);
+
+	const int size = 100;
+	int arr[size];
+	for (int i = 0; i < size; i++) {
+		arr[i] = dis(gen);
+	}
+
+	HashTable<int, int> table(size);
+	for (int num : arr) {
+		table.insert(num, table.count(num) + 1);
+	}
+
+	table.print();
+
+	std::cout << std::endl;
+
+	for (int num : arr) {
+		if (table.contains(num)) {
+			std::cout << "Number " << num << " appears " << table.count(num) << " times" << std::endl;
+			table.erase(num); 
+		}
+	}
+
 	return 0;
 }

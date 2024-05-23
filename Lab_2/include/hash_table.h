@@ -156,6 +156,20 @@ public:
 		return cnt;
 	}
 
+	V operator[](const K& key) const {
+		Pair* find_pair = search(key);
+		if (find_pair)
+			return find_pair->value;
+		throw std::out_of_range("Key not found");
+	}
+
+	V& operator[](const K& key) {
+		Pair* find_pair = search(key);
+		if (find_pair)
+			return find_pair->value;
+		throw std::out_of_range("Key not found");
+	}
+
 
 };
 
