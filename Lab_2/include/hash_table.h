@@ -36,6 +36,8 @@ class HashTable {
 
 public:
 
+	
+
 	HashTable(size_t capacity) : _size(0), _data(capacity) {}
 
 	HashTable(const HashTable& other) : _data(other._data), _size(other._size) {}
@@ -104,7 +106,7 @@ public:
 			find_pair->value = value;
 			return false;
 		}
-		insert(key, value);
+		return insert(key, value);
 	}
 
 	bool contains(const V& value) {
@@ -169,6 +171,9 @@ public:
 			return find_pair->value;
 		throw std::out_of_range("Key not found");
 	}
+
+
+	
 
 
 };
