@@ -11,8 +11,8 @@ template<typename Vertex, typename Distance = double>
 class Graph {
 public:
     struct Edge {
-        Vertex source;
-        Vertex destination;
+        Vertex from;
+        Vertex to;
         Distance weight;
     };
 
@@ -40,7 +40,7 @@ public:
         _edges.erase(v);
         for (auto& vertex : _vertices) {
             auto& edges = _edges.at(vertex);
-            edges.erase(std::remove_if(edges.begin(), edges.end(), [v](const Edge& e) {return e.destination == v; }), edges.end());
+            edges.erase(std::remove_if(edges.begin(), edges.end(), [v](const Edge& e) {return e.to == v; }), edges.end());
         }
         return true;
     }
@@ -60,7 +60,7 @@ public:
             return false;
         auto& edges = _edges.at(from);
 
-        edges.erase(std::remove_if(edges.begin(), edges.end(), [&](const Edge& e) { return (e.source == from) && (e.destination == to); }), edges.end());
+        edges.erase(std::remove_if(edges.begin(), edges.end(), [&](const Edge& e) { return (e.from == from) && (e.to == to); }), edges.end());
 
         return true;
     }
@@ -68,10 +68,10 @@ public:
     bool remove_edge(const Edge& e) {
         if (!has_edge(e))
             return false;
-        auto& edges = _edges.at(e.source);
+        auto& edges = _edges.at(e.from);
 
         edges.erase(std::remove_if(edges.begin(), edges.end(), [e](const Edge& edge)
-            { return (e.source == edge.source) && (e.destination == edge.destination) && (e.weight == edge.weight); }), edges.end());
+            { return (e.from == edge.from) && (e.to == edge.to) && (e.weight == edge.weight); }), edges.end());
 
         return true;
     }
@@ -79,7 +79,7 @@ public:
     bool has_edge(const Vertex& from, const Vertex& to) const {
         for (const auto& edges : _edges) {
             for (const auto& edge : edges.second) {
-                if (edge.source == from && edge.destination == to) {
+                if (edge.from == from && edge.to == to) {
                     return true;
                 }
             }
@@ -88,11 +88,20 @@ public:
     }
 
     bool has_edge(const Edge& e) const {
-        auto& edges = _edges.at(e.source);
+        auto& edges = _edges.at(e.from);
         for (const auto& edge : edges)
-            if (edge.destination == e.destination && abs(edge.weight - e.weight) < EPSILON)
+            if (edge.to == e.to && abs(edge.weight - e.weight) < EPSILON)
                 return true;
         return false;
+    }
+
+    void print_edges() const {
+        std::cout << "Edges: " << std::endl;
+        for (const Vertex& vertex : _vertices) {
+            for (const Edge& edge : _edges.at(vertex)) {
+                std::cout << edge.from << " - " << edge.to << "(" << edge.weight << ")" << std::endl;
+            }
+        }
     }
 
 };
