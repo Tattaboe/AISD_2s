@@ -31,10 +31,10 @@ int main() {
     std::cout << "The order of the graph: " << g.order() << std::endl;
 
     std::cout << std::endl;
-    auto path = g.shortest_path(1, 5);
+    auto path = g.shortest_path(5, 2);
     std::cout << "Shortest path from 1 to 5: ";
     for (const auto& edge : path) {
-        std::cout << "From: " << edge.from << " To: " << edge.to << " Weight: " << edge.weight << std::endl;
+        std::cout << "Weight: "<< edge.weight << std::endl;
     }
 
 
