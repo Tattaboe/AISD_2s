@@ -215,6 +215,38 @@ public:
             }
         }
     }
+
+    Distance length_shortest_path(const Vertex& from, const Vertex& to) const {
+        std::vector<Edge> edges = shortest_path(from, to);
+        Distance len = 0;
+        for (const auto& edge : edges) {
+            len += edge.weight;
+        }
+        return len;
+    }
+
+    
+    Vertex find_optimal_warehouse_location() {
+        Vertex best_location;
+        Distance min_max_distance = std::numeric_limits<Distance>::max();
+
+        for (const auto& v : vertices()) {
+            Distance max_distance = 0;
+            for (const auto& other_v : vertices()) {
+                if (v != other_v) {
+                    Distance distance = length_shortest_path(v, other_v);
+                    max_distance = std::max(max_distance, distance);
+                }
+            }
+
+            if (max_distance < min_max_distance) {
+                min_max_distance = max_distance;
+                best_location = v;
+            }
+        }
+
+        return best_location;
+    }
 };
 
 #endif

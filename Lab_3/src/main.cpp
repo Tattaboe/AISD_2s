@@ -45,6 +45,8 @@ int main() {
         std::cout << v << " ";
     std::cout << std::endl;
 
+    std::cout << "Center: " << g.find_optimal_warehouse_location() << std::endl;
+
 
 
     return 0;
