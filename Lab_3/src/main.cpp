@@ -1,6 +1,6 @@
 #include <iostream>
 #include "../include/graph.h"
-
+using namespace std;
 
 
 int main() {
@@ -24,6 +24,19 @@ int main() {
     g.add_edge(5, 1, 2);
 
     g.print_edges();
+    g.print_vertices();
+
+    std::cout << std::endl;
+    auto path = g.shortest_path(1, 5);
+    std::cout << "Shortest path from 1 to 5: ";
+    for (const auto& edge : path) {
+        std::cout << "From: " << edge.from << " To: " << edge.to << " Weight: " << edge.weight << std::endl;
+    }
+
+
+    
+
+
 
     return 0;
 }

@@ -90,10 +90,33 @@ public:
     bool has_edge(const Edge& e) const {
         auto& edges = _edges.at(e.from);
         for (const auto& edge : edges)
-            if (edge.to == e.to && abs(edge.weight - e.weight) < EPSILON)
+            if (edge.to == e.to && std::abs(edge.weight - e.weight) < EPSILON)
                 return true;
         return false;
     }
+
+    std::vector<Edge> edges(const Vertex& vertex) {
+        if (!has_vertex(vertex))
+            throw std::invalid_argument("not found");
+        return _edges[vertex];
+    }
+
+    size_t order() const {
+        return _vertices.size();
+    }
+
+    size_t degree(const Vertex& v) const {
+        size_t count = 0;
+        for (const auto& edges : _edges) {
+            for (const auto& edge : edges.second) {
+                if (edge.from == v || edge.to == v) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    } 
+
 
     void print_edges() const {
         std::cout << "Edges: " << std::endl;
@@ -104,6 +127,62 @@ public:
         }
     }
 
+    
+    void print_vertices() const {
+        std::cout << "Vertices: [ ";
+        for (const Vertex& vertex : _vertices) {
+            if (vertex != _vertices.back()) std::cout << vertex << ", ";
+            else std::cout << vertex << " ]";
+        }
+    }
+
+
+
+    std::vector<Edge> shortest_path(const Vertex& from, const Vertex& to) const {
+        if (!has_vertex(from) || !has_vertex(to)) throw std::invalid_argument("[shortest_path] one or two vertices do not exist in the graph");
+
+        std::unordered_map<Vertex, Distance> weight;
+
+        for (const Vertex& vertex : _vertices) {
+            weight[vertex] = std::numeric_limits<Distance>::max();
+        }
+        weight[from] = 0;
+
+        std::unordered_map<Vertex, Vertex> prev;
+
+        for (size_t i = 0; i < _vertices.size(); ++i) {
+            for (const auto& [from, edges] : _edges) {
+                for (const auto& edge : edges) {
+                    if (weight[from] + edge.weight < weight[edge.to]) {
+                        weight[edge.to] = weight[from] + edge.weight;
+                        prev[edge.to] = edge.from;
+                    }
+                }
+            }
+        }
+        for (const auto& [from, edges] : _edges) {
+            for (const auto& edge : edges) {
+                if (weight[from] + edge.weight < weight[edge.to])
+                    throw std::runtime_error("[shortest_path] the graph contains a negative cycle");
+            }
+        }
+        std::vector<Edge> result;
+        Vertex current = to;
+        while (current != from) {
+            auto it = std::find_if(_edges.at(prev[current]).begin(), _edges.at(prev[current]).end(), [&](const Edge& e) { return e.to == current; });
+            result.push_back(*it);
+            current = prev[current];
+        }
+        std::reverse(result.begin(), result.end());
+
+        return result;
+    }
+
+    
+    
+
+
 };
 
 #endif
+
