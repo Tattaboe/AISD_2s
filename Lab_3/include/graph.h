@@ -6,6 +6,12 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <queue>
+#include <limits>
+#include <set>
+#include <algorithm>
+#include <functional>
+#include <stack>
 
 template<typename Vertex, typename Distance = double>
 class Graph {
@@ -136,52 +142,79 @@ public:
         }
     }
 
-
-
+    
     std::vector<Edge> shortest_path(const Vertex& from, const Vertex& to) const {
-        if (!has_vertex(from) || !has_vertex(to)) throw std::invalid_argument("[shortest_path] one or two vertices do not exist in the graph");
+        if (!has_vertex(from) || !has_vertex(to))
+            return {};
 
-        std::unordered_map<Vertex, Distance> weight;
-
-        for (const Vertex& vertex : _vertices) {
-            weight[vertex] = std::numeric_limits<Distance>::max();
-        }
-        weight[from] = 0;
-
+        std::unordered_map<Vertex, Distance> distances;
         std::unordered_map<Vertex, Vertex> prev;
+        std::set<std::pair<Distance, Vertex>> pq;
 
-        for (size_t i = 0; i < _vertices.size(); ++i) {
-            for (const auto& [from, edges] : _edges) {
-                for (const auto& edge : edges) {
-                    if (weight[from] + edge.weight < weight[edge.to]) {
-                        weight[edge.to] = weight[from] + edge.weight;
-                        prev[edge.to] = edge.from;
-                    }
+        for (const auto& vertex : _vertices)
+            distances[vertex] = INFIN;
+        distances[from] = 0;
+        pq.insert({ 0, from });
+
+        while (!pq.empty()) {
+            Vertex current = pq.begin()->second;
+            pq.erase(pq.begin());
+
+            for (const auto& edge : _edges.at(current)) {
+                if (distances[current] + edge.weight < distances[edge.to]) {
+                    pq.erase({ distances[edge.to], edge.to });
+                    distances[edge.to] = distances[current] + edge.weight;
+                    prev[edge.to] = current;
+                    pq.insert({ distances[edge.to], edge.to });
                 }
             }
         }
-        for (const auto& [from, edges] : _edges) {
-            for (const auto& edge : edges) {
-                if (weight[from] + edge.weight < weight[edge.to])
-                    throw std::runtime_error("[shortest_path] the graph contains a negative cycle");
-            }
-        }
-        std::vector<Edge> result;
+
+        std::vector<Edge> path;
         Vertex current = to;
         while (current != from) {
-            auto it = std::find_if(_edges.at(prev[current]).begin(), _edges.at(prev[current]).end(), [&](const Edge& e) { return e.to == current; });
-            result.push_back(*it);
+            for (const auto& edge : _edges.at(prev[current])) {
+                if (edge.to == current) {
+                    path.push_back(edge);
+                    break;
+                }
+            }
             current = prev[current];
         }
-        std::reverse(result.begin(), result.end());
+        std::reverse(path.begin(), path.end());
 
-        return result;
+        return path;
     }
 
-    
-    
 
+    void walk(const Vertex& start_vertex, std::function<void(const Vertex&)> action) const {
+        if (!has_vertex(start_vertex))
+            throw std::invalid_argument("start_vertex not found");
 
+        std::vector<Vertex> visited;
+        std::vector<size_t> dist(_vertices.size(), false);
+        std::stack<Vertex> stack;
+
+        dist[start_vertex] = true;
+        stack.push(start_vertex);
+        action(start_vertex);
+        visited.push_back(start_vertex);
+
+        while (!stack.empty()) {
+            Vertex current = stack.top();
+            stack.pop();
+
+            for (const auto& edge : _edges.at(current)) {
+                size_t index = std::find(_vertices.begin(), _vertices.end(), edge.to) - _vertices.begin();
+                if (std::find(visited.begin(), visited.end(), edge.to) == visited.end()) {
+                    stack.push(edge.to);
+                    visited.push_back(edge.to);
+                    dist[index] = dist[std::find(_vertices.begin(), _vertices.end(), current) - _vertices.begin()] + 1;
+                    action(edge.to);
+                }
+            }
+        }
+    }
 };
 
 #endif

@@ -27,6 +27,10 @@ int main() {
     g.print_vertices();
 
     std::cout << std::endl;
+    std::cout << "The degree of the vertex 4: " << g.degree(4) << std::endl;
+    std::cout << "The order of the graph: " << g.order() << std::endl;
+
+    std::cout << std::endl;
     auto path = g.shortest_path(1, 5);
     std::cout << "Shortest path from 1 to 5: ";
     for (const auto& edge : path) {
@@ -34,7 +38,12 @@ int main() {
     }
 
 
-    
+    std::cout << "Graph traversal: ";
+    std::vector<int> visited;
+    g.walk(1, [&visited](const int vertex) { visited.push_back(vertex); });
+    for (int v : visited)
+        std::cout << v << " ";
+    std::cout << std::endl;
 
 
 
